@@ -1,0 +1,397 @@
+:root {
+    --color-light: #0080FF;
+    --color-dark:  #0073E5;
+    --color-primary: #F7CB18;
+}
+*, 
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+}
+
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-primary);
+}
+
+
+body {
+    background-color: inherit;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+
+.app {
+    max-width: 800px;
+    margin: 7rem auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mode {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+#post-form {
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 0rem 0 1rem;
+    margin-bottom: 2rem;
+}
+
+
+
+#body {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+
+button {
+    display: inline-block;
+    width: 100px;
+    padding: 1rem;
+    margin: .5rem 0;
+    background-color: var(--color-light);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--color-dark);
+}
+#posts {
+    width: 90%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    margin-bottom: 3rem;
+}
+
+#title {
+    display: inline-block;
+    padding: 1rem;
+    margin-right: .5rem;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 75%;
+    margin: .5rem 0;
+    border: none;
+    box-shadow: 0px 1px 1px 2px #ccc;
+    border-radius: 5px;
+    background-color: inherit;
+    color: inherit;
+}
+
+#title:focus {
+    box-shadow: none;
+    outline-color: #45A049;
+}
+
+#title:invalid {
+    outline-color: orangered;
+}
+
+.post {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding: 0px 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: 90%;
+
+}
+
+
+ .delete-btn {
+    display: inline-block;
+    padding: .4rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: red;
+ }
+
+ .edit {
+    display: none;
+    width: 100%;
+    color: black;
+ }
+
+ .icon {
+    width: 1rem;
+ }
+
+ .icon-pencil {
+    color: var(--color-light);
+    cursor: pointer;
+ }
+ .icon-trash {
+    color: red;
+    cursor: pointer;
+
+ }
+
+.task {
+    
+    color: inherit;
+    background-color: inherit;
+    text-align: left;
+}
+
+.task > div:first-child{
+    margin-right: 1rem;
+}
+
+.tasks-remaining {
+    margin-bottom: 1rem;
+}
+
+.post li input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+}
+
+.post-content {
+    max-width: 80%;
+    /* Adjust based on preference */
+}
+
+.post-title {
+    flex: .8 1 0%;
+    align-self: stretch;
+    display: inline-block;
+    padding: .5rem 1rem;
+    padding-bottom: 0 ;
+    margin-right: .5rem;
+    font-size: 12px;
+    margin-bottom: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    border-bottom: 2px solid  #ccc ;
+    background-color: inherit;
+    color: inherit;
+}
+
+.post-title:focus {
+    border-bottom: 2px solid  #0080FF;
+}
+
+.post-body {
+    font-size: 16px;
+    color: inherit;
+    background-color: inherit;
+}
+
+.navbar {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: inherit;
+}
+
+
+
+.slide-label {
+    cursor: pointer;
+    font-size: 1.7rem;
+    color: #F9C23C;
+}
+.toggle-btn {
+    display: inline-block;
+    padding: .5rem 1rem;
+    background-color: var(--color-dark);
+    height: 100%;
+    border-radius: 100px;
+    position: relative;
+    transition: all .3s;
+    box-shadow: 0px 1px 4px 4px #333333 ;
+    margin-right: .7rem;
+}
+
+.toggle-btn::before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    top: 0;
+    left: 0;
+    background-color: #f9f9f9;
+    border-radius: 50%;
+}
+
+.toggle-btn::after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    top: 0;
+    right: 0;
+    background-color: #f9f9f9;
+    border-radius: 50%;
+    display: none;
+   
+}
+
+.slider {
+    display: none;
+}
+ 
+.slider:checked + .toggle-btn{
+    box-shadow: 1px 1px 1px 1px #ccc;
+    
+}
+
+.slider:checked + .toggle-btn::before{
+    display: none;
+    
+}
+.slider:checked + .toggle-btn::after{
+    display: block;
+    
+}
+
+.completed {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px 2px #ccc;
+    position: relative;
+    transition: all .3s;
+}
+
+.completed::before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    width: .8rem;
+    height: .8rem;
+    border-radius: 50%;
+    background-color: #0080FF;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all .3s;
+    opacity: 0;
+}
+
+
+
+.completed:checked .completed::before {
+    opacity: 1;
+}
+
+.icon {
+      
+}
+
+.footer-section {
+    min-width: 90%;
+    height: 3rem;
+    background-color: #eee;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: inherit;
+}
+
+@media (max-width: 500px) {
+
+    body {
+        font-size: 62.5%;
+    }
+    #app {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 400px;
+        font-size: inherit;
+    }
+
+    .navbar{
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        margin: .5rem auto;
+    }
+
+    .slide-label {
+        position: absolute;
+        top: -1rem;
+        right: 0;
+    }
+
+       
+     h1 {
+        margin-bottom: .4rem;
+     }
+    #post-form {
+        width: 90%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #title {
+        width: 90%;
+        padding: .5rem;
+    }
+
+    #add-post {
+        align-self: center;
+    }
+
+    #posts {
+        width: 90%;
+        padding: 1rem;
+    }
+    .post {
+        width: 90%;
+        margin: 1rem;
+        padding: .5rem;
+        width: 100%;
+        font-size: inherit;
+    }
+
+    .post-title {
+       font-size: 100%;
+    }
+    .post li {
+        width: 100%;
+    }
+   
+
+}
