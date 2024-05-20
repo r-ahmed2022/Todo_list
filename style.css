@@ -99,8 +99,7 @@ button:hover {
     margin-bottom: 10px;
     width: 75%;
     margin: .5rem 0;
-    border: none;
-    box-shadow: 0px 1px 1px 2px #ccc;
+    border: none;border-bottom: 2px solid #F7CB18;
     border-radius: 5px;
     background-color: inherit;
     color: inherit;
@@ -117,15 +116,15 @@ button:hover {
 
 .post {
     height: 3rem;
+    width: 80%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: none;
-    border-bottom: 1px solid #ccc;
+    box-shadow: 0px 1px 2px 2px #0073E5;
+    border-radius: 100px;
     padding: 0px 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
-    width: 90%;
 
 }
 
@@ -195,7 +194,6 @@ button:hover {
     font-weight: 700;
     text-transform: uppercase;
     border: none;
-    border-bottom: 2px solid  #ccc ;
     background-color: inherit;
     color: inherit;
 }
@@ -285,16 +283,16 @@ button:hover {
     appearance: none;
     width: 1rem;
     height: 1rem;
-    border-radius: 50%;
-    box-shadow: 0px 0px 2px 2px #ccc;
+    border-radius: 50%;;
+    box-shadow: 0px 0px 2px 2px #F7CB18;
     position: relative;
     transition: all .3s;
+    cursor: pointer;
 }
 
 .completed::before {
     content: '';
     position: absolute;
-    display: inline-block;
     width: .8rem;
     height: .8rem;
     border-radius: 50%;
@@ -303,17 +301,46 @@ button:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     transition: all .3s;
-    opacity: 0;
+     display: none;
 }
 
-
-
-.completed:checked .completed::before {
-    opacity: 1;
+.completed:checked::before {
+    display: block;
 }
 
-.icon {
-      
+.done {
+    text-decoration: line-through;
+    color: #ccc;
+    font-style: italic;
+    letter-spacing: .2rem;
+}
+
+ span.empty {
+      color: var(--color-light);
+      display: inline-block;
+      padding: 1rem 2rem;
+      transition: all .5s;
+      animation: zerotasks 2s ease-in-out infinite;
+      position: relative;
+}
+
+ .empty::before {
+     content: 'Add Task';
+     position: absolute;
+     bottom: .3rem;
+     left: 20%;
+     font-size: .8rem;
+ }
+@keyframes zerotasks {
+    0% {
+        transform: scale(.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .footer-section {
@@ -328,7 +355,7 @@ button:hover {
     background-color: inherit;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
 
     body {
         font-size: 62.5%;
@@ -338,10 +365,11 @@ button:hover {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        max-width: 400px;
+        max-width: 450px;
         font-size: inherit;
     }
-
+   input[type="text"]:not(:focus) {
+   }
     .navbar{
         flex-direction: column;
         position: relative;
