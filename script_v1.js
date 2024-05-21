@@ -17,21 +17,22 @@ addEventListener('load', () => {
     const post = document.querySelector(".post");
     
     var tasksCount  = 0;
+    var completedTask = 0;
             function loadTasks() {
                 return JSON.parse(localStorage.getItem("tasks")) ?? [];
             }
             function saveTasks(tasks) {
                 localStorage.setItem("tasks", JSON.stringify(tasks));
             }
-
+        
      function getTasks() {
         try {
             tasks = loadTasks();
-            tasksCount = tasks.length;
             if(tasks.length === 0) {
+                tasksCount = 0;
                 setTimeout(() => {
                     posts.innerHTML = `<span class="empty"><i class="fa-solid fa-plus"></i></span>`;
-                }, 1000);
+                }, 100);
              } else {
                 posts.innerHTML = "";
                 tasks.map(todo =>  {
@@ -40,6 +41,7 @@ addEventListener('load', () => {
                 liTask.setAttribute("id", `${todo.id}`);
                 const completedTask = document.createElement("input");
                 completedTask.type = "checkbox";
+                completedTask.checked = todo.completed;
                 completedTask.setAttribute("id", `check-${todo.id}`);
                 completedTask.classList.add("completed");
                 liTask.appendChild(completedTask);
@@ -50,6 +52,8 @@ addEventListener('load', () => {
                 task.setAttribute("id", `text-${todo.id}`);
                 task.setAttribute("readonly", true)
                 task.classList.add("post-title");
+                todo.completed ?
+                task.classList.add("done") : task.classList.remove("done");
                 liTask.appendChild(task);
                 const div = document.createElement("div");
                 div.classList.add("edit-div");
@@ -73,13 +77,13 @@ addEventListener('load', () => {
         }catch(error) {
             console.log(error);
         }
+        document.querySelector(".tasks-count b").textContent = tasksCount;
 
-        document.querySelector(".tasks-count").lastChild.textContent = tasksCount;
     }
 
     getTasks();
 
-   
+  
     posts.addEventListener('change', (event) => {
         if (event.target.classList.contains('completed')) {
             const currentElement = event.target;
@@ -87,18 +91,28 @@ addEventListener('load', () => {
              let markTasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
              const index = markTasks.findIndex(task => task.id === taskId);
              if (index !== -1) {
-               markTasks[index].completed = event.target.checked;
+               markTasks[index].completed = currentElement.checked;
+              
                  if(event.target.checked) {
                     const sibling = currentElement.nextElementSibling;
                     sibling.classList.add("done");
-                 } else currentElement.nextElementSibling.classList.remove("done");
+                    if(tasks.length != 0)  {
+                       tasksCount -=1;
+                    } else if(tasks.length === 0) tasksCount = 0;
+                    document.querySelector(".tasks-count b").textContent = tasksCount;
+                 } else {
+                    currentElement.nextElementSibling.classList.remove("done");
+                    tasksCount +=1;
+                    document.querySelector(".tasks-count b").textContent = tasksCount;
+                }
                  saveTasks(markTasks);
-                 console.log(index)
                  console.log(obj)
              }
              else  console.error('Task not found', currentElement);
-             getTasks();
+
    }
+   getTasks();
+
 });
     
 
@@ -138,6 +152,9 @@ posts.addEventListener('click', (event) => {
                 let updatedTasks = markTasks.filter(task => task.id != taskId);
                 saveTasks(updatedTasks);
             }
+            if(tasksCount <= 0) tasksCount = 0;
+            else tasksCount -= 1;
+            document.querySelector(".tasks-count b").textContent = tasksCount
             getTasks();
     }
 });
@@ -170,9 +187,10 @@ posts.addEventListener('click', (event) => {
             title: postTitle.value,
             completed: false,
                 }
-         tasks.push(task)
+         tasks.push(task);
          saveTasks(tasks);
-        getTasks();
+         tasksCount += 1;
+          getTasks();
         e.target.reset();
     });
 

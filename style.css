@@ -293,6 +293,7 @@ button:hover {
 .completed::before {
     content: '';
     position: absolute;
+    display: inline-block;
     width: .8rem;
     height: .8rem;
     border-radius: 50%;
@@ -301,11 +302,11 @@ button:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     transition: all .3s;
-     display: none;
+     opacity: 0;
 }
 
 .completed:checked::before {
-    display: block;
+    opacity: 1;
 }
 
 .done {
@@ -368,8 +369,7 @@ button:hover {
         max-width: 450px;
         font-size: inherit;
     }
-   input[type="text"]:not(:focus) {
-   }
+ 
     .navbar{
         flex-direction: column;
         position: relative;

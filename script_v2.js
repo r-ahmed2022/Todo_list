@@ -14,20 +14,18 @@ addEventListener('load', () => {
     const completed = document.querySelector(".completed");
     const checkbox = document.querySelector("tasks");
     const post = document.querySelector(".post");
-    
-    var tasksCount  = 0;
+    var completedTaskCount = 0;
             function loadTasks() {
                 return JSON.parse(localStorage.getItem("tasks")) ?? [];
             }
             function saveTasks(tasks) {
                 localStorage.setItem("tasks", JSON.stringify(tasks));
-                console.log(tasks)
             }
 
      function getTasks() {
         try {
              tasks = loadTasks();
-             tasksCount = tasks.length ;
+             completedTaskCount = tasks.length ;
              if(tasks.length === 0) {
                 setTimeout(() => {
                     posts.innerHTML = `<span class="empty"><i class="fa-solid fa-plus"></i></span>`;
@@ -40,8 +38,35 @@ addEventListener('load', () => {
                 liTask.setAttribute("id", `${todo.id}`);
                 const completedTask = document.createElement("input");
                 completedTask.type = "checkbox";
+                completedTask.checked = todo.completed;
                 completedTask.setAttribute("id", `check-${todo.id}`);
                 completedTask.classList.add("completed");
+                completedTask.addEventListener('change', (event) => {
+                    if (event.target.classList.contains('completed')) {
+                        //debugger;
+                        const currentElement = event.target;
+                         const taskId = parseInt((currentElement.id).split("-")[1]);
+                         const index = tasks.findIndex(task => task.id === taskId);
+                         if (index !== -1) {
+                            const updateCompleted = () => {
+                             tasks[index].completed = currentElement.checked;
+                             if(currentElement.checked) {
+                                currentElement.nextElementSibling.classList.add("done");
+                                document.querySelector(".tasks-count b").textContent = `${completedTaskCount -= 1}`;
+                             } else {
+                                currentElement.nextElementSibling.classList.remove("done");
+                                document.querySelector(".tasks-count b").textContent = completedTaskCount += 1;
+                                }
+                                saveTasks(tasks);
+                            }
+                              updateCompleted();
+                              completedTask.removeEventListener('change', updateCompleted)
+                              console.log(obj)
+                         }
+                         else  console.error('Task not found', currentElement);
+                         getTasks();
+               }
+                })
                 liTask.appendChild(completedTask);
    
                 const task = document.createElement("input");
@@ -50,6 +75,10 @@ addEventListener('load', () => {
                 task.setAttribute("id", `text-${todo.id}`);
                 task.setAttribute("readonly", true)
                 task.classList.add("post-title");
+                (todo.completed) 
+                 ? task.classList.add("done")
+                 :  task.classList.remove("done");
+                
                 liTask.appendChild(task);
                
                 const div = document.createElement("div");
@@ -114,31 +143,14 @@ addEventListener('load', () => {
             console.log(error);
         }
     
-        document.querySelector(".tasks-count").lastChild.textContent = tasksCount;
+        document.querySelector(".tasks-count b").textContent = completedTaskCount;
     }
 
     getTasks();
     const completedTask = document.querySelector("hello");
    
     posts.addEventListener('change', (event) => {
-        if (event.target.classList.contains('completed')) {
-            const currentElement = event.target;
-             const taskId = parseInt((currentElement.id).split("-")[1]);
-             let markTasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
-             const index = markTasks.findIndex(task => task.id === taskId);
-             if (index !== -1) {
-               markTasks[index].completed = event.target.checked;
-                 if(event.target.checked) {
-                    const sibling = currentElement.nextElementSibling;
-                    sibling.classList.add("done");
-                 } else currentElement.nextElementSibling.classList.remove("done");
-                 saveTasks(markTasks);
-                 console.log(index)
-                 console.log(obj)
-             }
-             else  console.error('Task not found', currentElement);
-             getTasks();
-   }
+       
 });
     
 
@@ -169,10 +181,10 @@ addEventListener('load', () => {
             title: postTitle.value,
             completed: false,
                 }
-         tasks.push(task)
-         saveTasks(tasks);
-        getTasks();
-        e.target.reset();
+            tasks.push(task)
+           saveTasks(tasks);
+           getTasks();
+            e.target.reset();
     });
 
     
