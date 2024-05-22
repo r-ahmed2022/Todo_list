@@ -1,7 +1,7 @@
 addEventListener('load', () => {
    
     let tasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
-
+    var username = JSON.parse(localStorage.getItem('username')) ?? '';
     const posts = document.getElementById("posts");
     const submitForm = document.getElementById("post-form");
     const postTitle = document.getElementById("title");
@@ -16,8 +16,12 @@ addEventListener('load', () => {
     const checkbox = document.querySelector("tasks");
     const post = document.querySelector(".post");
     const filter = document.getElementById('filter');
-    tasksCount  = 0;
-    var completedTask = 0;
+    const user = document.querySelector(".username");
+    user.value = username;
+    var tasksCount  = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
+    const date = new Date().getHours();
+    const salutation = document.querySelector('.salutation');
+    salutation.innerText = `${date < 12 ? 'Morning' : date > 12 || date < 5 ? "Afternoon" : 'Evening'}`;
     let filterName = '';
             function loadTasks() {
                 return JSON.parse(localStorage.getItem("tasks")) ?? [];
@@ -32,6 +36,7 @@ addEventListener('load', () => {
         return tasks.filter(item => !item.completed);
     }
       function completedTaskCount(tasksCount) {
+        localStorage.setItem("tasksCount", JSON.stringify(tasksCount));
         document.querySelector(".tasks-count b").textContent = tasksCount;
       }
         
@@ -39,7 +44,6 @@ addEventListener('load', () => {
         try {
             tasks = loadTasks();
             if(tasks.length === 0) {
-                tasksCount = 0;
                 setTimeout(() => {
                     posts.innerHTML = `<span class="empty"><i class="fa-solid fa-plus"></i></span>`;
                 }, 100);
@@ -112,7 +116,7 @@ addEventListener('load', () => {
                     if(tasks.length != 0)  {
                        tasksCount -=1;
                        completedTaskCount(tasksCount);
-                    } else if(tasks.length <= 0) tasksCount = 0;
+                    } else if(tasksCount === 0) tasksCount = 0;
 
                  } else {
                     currentElement.nextElementSibling.classList.remove("done");
@@ -182,15 +186,13 @@ posts.addEventListener('click', (event) => {
             document.documentElement.style.backgroundColor = "#000";
             body.style.backgroundColor = 'inherit';
             container.classList.add("mode");
-            completed.style.border = '1px solid #fff';
-        } 
+            } 
         if(!status){
             label.lastChild.textContent ="🌙";
             label.style.color = "#F9C23C";
             document.documentElement.style.backgroundColor = "initial";
             body.style.backgroundColor = '#F7CB18';
             container.classList.remove("mode");
-            completed.style.borderColor = "initial"
         } 
 
     }
@@ -219,4 +221,9 @@ posts.addEventListener('click', (event) => {
       getTasks(e.target.value);
  })
  completedTaskCount(tasksCount);
+
+ user.addEventListener('input', (e) => {
+     localStorage.setItem('username', JSON.stringify(e.target.value));
+     this.blur();
+ })
 });
