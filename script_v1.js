@@ -19,9 +19,10 @@ addEventListener('load', () => {
     const user = document.querySelector(".username");
     user.value = username;
     var tasksCount  = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
-    const date = new Date().getHours();
+    const date = new Date();
+
     const salutation = document.querySelector('.salutation');
-    salutation.innerText = `${date < 12 ? 'Morning' : date > 12 || date < 5 ? "Afternoon" : 'Evening'}`;
+    salutation.innerText = `${date.getHours() < 12 ? 'Morning' : date.getHours() > 12 || date.getHours() < 17 ? "Afternoon" : 'Evening'}`;
     let filterName = '';
             function loadTasks() {
                 return JSON.parse(localStorage.getItem("tasks")) ?? [];
@@ -51,7 +52,7 @@ addEventListener('load', () => {
                 posts.innerHTML = "";
                 const filteredtasks = todoArray === 'All' ? tasks :
                 todoArray === 'completed' ? getFilteredTasks(todoArray) : getFilteredTasks(todoArray);
-                filteredtasks.map(todo => {
+                filteredtasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(todo => {
                 const liTask = document.createElement("li");
                 liTask.classList.add("post");
                 liTask.setAttribute("id", `${todo.id}`);
@@ -203,6 +204,7 @@ posts.addEventListener('click', (event) => {
             id: tasks.length + 1,
             title: postTitle.value,
             completed: false,
+            createdAt: new Date(),
                 }
          tasks.push(task);
          saveTasks(tasks);
