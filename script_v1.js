@@ -22,7 +22,7 @@ addEventListener('load', () => {
     const date = new Date();
 
     const salutation = document.querySelector('.salutation');
-    salutation.innerText = `${date.getHours() < 12 ? 'Morning' : date.getHours() > 12 || date.getHours() < 17 ? "Afternoon" : 'Evening'}`;
+    salutation.innerText = `${date.getHours() < 12 ? 'Morning' : date.getHours() > 12 && date.getHours() < 17 ? "Afternoon" : 'Evening'}`;
     let filterName = '';
             function loadTasks() {
                 return JSON.parse(localStorage.getItem("tasks")) ?? [];
@@ -31,17 +31,32 @@ addEventListener('load', () => {
                 localStorage.setItem("tasks", JSON.stringify(tasks));
             }
     function getFilteredTasks(filter) {
-        if(filter.toLowerCase() === 'complete')
+        if(filter === 'complete')
             return tasks.filter(item => item.completed);
-        else
+        else if(filter === 'incomplete')
         return tasks.filter(item => !item.completed);
+         else
+          return tasks;
     }
       function completedTaskCount(tasksCount) {
         localStorage.setItem("tasksCount", JSON.stringify(tasksCount));
         document.querySelector(".tasks-count b").textContent = tasksCount;
       }
+
         
+      function sortTasks(tasks) {
+       return tasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+      }
+
+      function composeTasks(...args) {
+        return function(data) {
+           return  args.reduceRight((val, func) => func(val), data);
+        }
+       }
+
      function getTasks(todoArray = "All") {
+        console.log(todoArray)
         try {
             tasks = loadTasks();
             if(tasks.length === 0) {
@@ -50,10 +65,8 @@ addEventListener('load', () => {
                 }, 100);
              } else {
                 posts.innerHTML = "";
-                const filteredtasks = todoArray === 'All' ? tasks :
-                todoArray === 'completed' ? getFilteredTasks(todoArray) : getFilteredTasks(todoArray);
-                filteredtasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(todo => {
-                const liTask = document.createElement("li");
+                composeTasks(sortTasks, getFilteredTasks)(todoArray).map(todo => {
+                const liTask = document.createElement("li")
                 liTask.classList.add("post");
                 liTask.setAttribute("id", `${todo.id}`);
                 const completedTask = document.createElement("input");
@@ -69,8 +82,8 @@ addEventListener('load', () => {
                 task.setAttribute("id", `text-${todo.id}`);
                 task.setAttribute("readonly", true)
                 task.classList.add("post-title");
-                todo.completed ?
-                task.classList.add("done") : task.classList.remove("done");
+                if(todo.completed) 
+                task.classList.add("done");
                 liTask.appendChild(task);
                 const div = document.createElement("div");
                 div.classList.add("edit-div");
@@ -98,8 +111,6 @@ addEventListener('load', () => {
         }
 
     }
-
-    getTasks();
 
   
     posts.addEventListener('change', (event) => {
@@ -204,7 +215,7 @@ posts.addEventListener('click', (event) => {
             id: tasks.length + 1,
             title: postTitle.value,
             completed: false,
-            createdAt: new Date(),
+            createdAt: new Date().toISOString(),
                 }
          tasks.push(task);
          saveTasks(tasks);
@@ -220,7 +231,8 @@ posts.addEventListener('click', (event) => {
     setMode(checked);
 })  
  filter.addEventListener('change', (e) => {
-      getTasks(e.target.value);
+      const filterName = e.target.value;
+      getTasks(filterName.trim().toLowerCase());
  })
  completedTaskCount(tasksCount);
 
@@ -228,4 +240,5 @@ posts.addEventListener('click', (event) => {
      localStorage.setItem('username', JSON.stringify(e.target.value));
      this.blur();
  })
+ getTasks();
 });

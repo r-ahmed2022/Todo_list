@@ -14,7 +14,7 @@ addEventListener('load', () => {
     const completed = document.querySelector(".completed");
     const checkbox = document.querySelector("tasks");
     const post = document.querySelector(".post");
-    var completedTaskCount = 0;
+    var tasksCount  = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
             function loadTasks() {
                 return JSON.parse(localStorage.getItem("tasks")) ?? [];
             }
@@ -22,10 +22,14 @@ addEventListener('load', () => {
                 localStorage.setItem("tasks", JSON.stringify(tasks));
             }
 
+            function completedTaskCount(tasksCount) {
+                localStorage.setItem("tasksCount", JSON.stringify(tasksCount));
+                document.querySelector(".tasks-count b").textContent = tasksCount;
+              }
+
      function getTasks() {
         try {
              tasks = loadTasks();
-             completedTaskCount = tasks.length ;
              if(tasks.length === 0) {
                 setTimeout(() => {
                     posts.innerHTML = `<span class="empty"><i class="fa-solid fa-plus"></i></span>`;
@@ -52,10 +56,15 @@ addEventListener('load', () => {
                              tasks[index].completed = currentElement.checked;
                              if(currentElement.checked) {
                                 currentElement.nextElementSibling.classList.add("done");
-                                document.querySelector(".tasks-count b").textContent = `${completedTaskCount -= 1}`;
+                                if(tasks.length != 0)  {
+                                    tasksCount -=1;
+                                    completedTaskCount(tasksCount);
+                                 } else if(tasksCount === 0) tasksCount = 0;
+             
                              } else {
                                 currentElement.nextElementSibling.classList.remove("done");
-                                document.querySelector(".tasks-count b").textContent = completedTaskCount += 1;
+                                tasksCount +=1;
+                                completedTaskCount(tasksCount);
                                 }
                                 saveTasks(tasks);
                             }
@@ -86,6 +95,7 @@ addEventListener('load', () => {
                 const editBtn = document.createElement("span");
                 editBtn.classList.add("icon");
                 editBtn.classList.add("icon-pencil");
+                editBtn.setAttribute("data-tooltip", "Edit");
                 const editElement = document.createElement('i');
                 editElement.classList.add('fa-solid', 'fa-pen-to-square');
                 editBtn.appendChild(editElement);
@@ -123,15 +133,18 @@ addEventListener('load', () => {
                 deleteBtn.classList.add("icon");
                 deleteBtn.classList.add("icon-trash");
                 const deleteElement = document.createElement('i');
+                deleteBtn.setAttribute("data-tooltip", "Delete");
                 deleteElement.classList.add('fa-solid', 'fa-trash');
                 deleteBtn.appendChild(deleteElement);
                 deleteBtn.addEventListener("click", (e) => {
-                   const currentElement = e.target
+                   const currentElement = e.target;
                    const taskId = parseInt(currentElement.closest('li').id);
                    tasks = tasks.filter(task => task.id != taskId);
-                         console.log(tasks)
-                         saveTasks(tasks);
-                         getTasks();
+                   if(tasksCount <= 0) tasksCount = 0;
+                   else tasksCount -= 1;
+                   saveTasks(tasks)
+                   completedTaskCount(tasksCount);
+                    getTasks();
                     
                 })
                 liTask.appendChild(deleteBtn);
@@ -143,7 +156,6 @@ addEventListener('load', () => {
             console.log(error);
         }
     
-        document.querySelector(".tasks-count b").textContent = completedTaskCount;
     }
 
     getTasks();
@@ -183,6 +195,8 @@ addEventListener('load', () => {
                 }
             tasks.push(task)
            saveTasks(tasks);
+           tasksCount += 1;
+          completedTaskCount(tasksCount);
            getTasks();
             e.target.reset();
     });
@@ -192,4 +206,5 @@ addEventListener('load', () => {
     let {checked} = e.target;
     setMode(checked);
 })  
+completedTaskCount(tasksCount);
 });

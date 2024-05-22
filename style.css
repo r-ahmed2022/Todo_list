@@ -177,7 +177,19 @@ button:hover {
     
  }
 
- .icon::after {
+ .icon-pencil {
+    color: var(--color-light);
+    position: relative;
+    cursor: pointer;
+ }
+ .icon-trash {
+    color: red;
+    position: relative;
+    cursor: pointer;
+ }
+
+ .icon-pencil::after,
+ .icon-trash::after {
     content: attr(data-tooltip);
     position: absolute;
     bottom: 100%; 
@@ -193,21 +205,14 @@ button:hover {
     transition: opacity 0.2s;
 }
 
-.icon:hover::after {
+.icon-pencil:hover::after,
+.icon-trash:hover::after
+ {
     opacity: 1;
     visibility: visible;
 }
 
- .icon-pencil {
-    color: var(--color-light);
-    position: relative;
-    cursor: pointer;
- }
- .icon-trash {
-    color: red;
-    position: relative;
-    cursor: pointer;
- }
+
 
 
 
