@@ -15,17 +15,27 @@ addEventListener('load', () => {
     const completed = document.querySelector(".completed");
     const checkbox = document.querySelector("tasks");
     const post = document.querySelector(".post");
-    
-    var tasksCount  = 0;
+    const filter = document.getElementById('filter');
+    tasksCount  = 0;
     var completedTask = 0;
+    let filterName = '';
             function loadTasks() {
                 return JSON.parse(localStorage.getItem("tasks")) ?? [];
             }
             function saveTasks(tasks) {
                 localStorage.setItem("tasks", JSON.stringify(tasks));
             }
+    function getFilteredTasks(filter) {
+        if(filter.toLowerCase() === 'complete')
+            return tasks.filter(item => item.completed);
+        else
+        return tasks.filter(item => !item.completed);
+    }
+      function completedTaskCount(tasksCount) {
+        document.querySelector(".tasks-count b").textContent = tasksCount;
+      }
         
-     function getTasks() {
+     function getTasks(todoArray = "All") {
         try {
             tasks = loadTasks();
             if(tasks.length === 0) {
@@ -35,7 +45,9 @@ addEventListener('load', () => {
                 }, 100);
              } else {
                 posts.innerHTML = "";
-                tasks.map(todo =>  {
+                const filteredtasks = todoArray === 'All' ? tasks :
+                todoArray === 'completed' ? getFilteredTasks(todoArray) : getFilteredTasks(todoArray);
+                filteredtasks.map(todo => {
                 const liTask = document.createElement("li");
                 liTask.classList.add("post");
                 liTask.setAttribute("id", `${todo.id}`);
@@ -60,6 +72,7 @@ addEventListener('load', () => {
                 const editBtn = document.createElement("span");
                 editBtn.classList.add("icon");
                 editBtn.classList.add("icon-pencil");
+                editBtn.setAttribute("data-tooltip", "Edit");
                 const editElement = document.createElement('i');
                 editElement.classList.add('fa-solid', 'fa-pen-to-square');
                 editBtn.appendChild(editElement);
@@ -67,6 +80,7 @@ addEventListener('load', () => {
                 const deleteBtn = document.createElement("span");
                 deleteBtn.classList.add("icon");
                 deleteBtn.classList.add("icon-trash");
+                deleteBtn.setAttribute("data-tooltip", "Delete");
                 const deleteElement = document.createElement('i');
                 deleteElement.classList.add('fa-solid', 'fa-trash');
                 deleteBtn.appendChild(deleteElement);
@@ -77,7 +91,6 @@ addEventListener('load', () => {
         }catch(error) {
             console.log(error);
         }
-        document.querySelector(".tasks-count b").textContent = tasksCount;
 
     }
 
@@ -98,12 +111,13 @@ addEventListener('load', () => {
                     sibling.classList.add("done");
                     if(tasks.length != 0)  {
                        tasksCount -=1;
-                    } else if(tasks.length === 0) tasksCount = 0;
-                    document.querySelector(".tasks-count b").textContent = tasksCount;
+                       completedTaskCount(tasksCount);
+                    } else if(tasks.length <= 0) tasksCount = 0;
+
                  } else {
                     currentElement.nextElementSibling.classList.remove("done");
                     tasksCount +=1;
-                    document.querySelector(".tasks-count b").textContent = tasksCount;
+                    completedTaskCount(tasksCount);
                 }
                  saveTasks(markTasks);
                  console.log(obj)
@@ -131,8 +145,8 @@ posts.addEventListener('click', (event) => {
                 todo.setAttribute("readonly", true);
                 saveTasks(tasks);
                 todo.blur();
-                todo.removeEventListener("blur", saveEditedTask);
-                todo.removeEventListener("keydown", saveEditedTaskOnEnter);
+                todo.removeEventListener("blur", updateTask);
+                todo.removeEventListener("keydown", updateTaskOnEnter);
             };
 
             const updateTaskOnEnter = (e) => {
@@ -154,8 +168,9 @@ posts.addEventListener('click', (event) => {
             }
             if(tasksCount <= 0) tasksCount = 0;
             else tasksCount -= 1;
+            completedTaskCount(tasksCount);
             document.querySelector(".tasks-count b").textContent = tasksCount
-            getTasks();
+             getTasks();
     }
 });
  
@@ -190,6 +205,7 @@ posts.addEventListener('click', (event) => {
          tasks.push(task);
          saveTasks(tasks);
          tasksCount += 1;
+         completedTaskCount(tasksCount);
           getTasks();
         e.target.reset();
     });
@@ -199,4 +215,8 @@ posts.addEventListener('click', (event) => {
     let {checked} = e.target;
     setMode(checked);
 })  
+ filter.addEventListener('change', (e) => {
+      getTasks(e.target.value);
+ })
+ completedTaskCount(tasksCount);
 });

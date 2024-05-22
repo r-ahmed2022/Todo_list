@@ -125,7 +125,11 @@ button:hover {
     border-radius: 100px;
     padding: 0px 10px;
     margin-bottom: 10px;
+    transition: all 3s;
+}
 
+.moveOnDelete {
+    transform: translateY(4rem);
 }
 
 
@@ -145,17 +149,61 @@ button:hover {
 
  .icon {
     width: 1rem;
+    
  }
+
+ .icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
+}
+
+.icon:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
 
  .icon-pencil {
     color: var(--color-light);
+    position: relative;
     cursor: pointer;
  }
  .icon-trash {
     color: red;
+    position: relative;
     cursor: pointer;
-
  }
+
+
+
+
+ .icon-pencil::after,
+ .icon-trash::after
+  {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #F7CB18;
+    color: #0073E5;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s;
+}
 
 .task {
     
@@ -169,7 +217,30 @@ button:hover {
 }
 
 .tasks-remaining {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 1rem;
+}
+
+#filter {
+    display: inline-block;
+    padding: .4rem 1rem;
+    border-radius: 100px;
+    background-color: #F7CB18;
+    color: #0073E5;
+    box-shadow: 0px 0px 3px #0080FF ;
+}
+
+.filter-label {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.filter-label > b {
+    margin-right: .5rem;
 }
 
 .post li input[type="checkbox"] {
@@ -345,13 +416,14 @@ button:hover {
 }
 
 .footer-section {
-    min-width: 90%;
-    height: 3rem;
+    min-width: 80%;
+    height: 4rem;
     background-color: #eee;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1rem;
     background-color: inherit;
 }
@@ -366,7 +438,7 @@ button:hover {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        max-width: 450px;
+        max-width: 400px;
         font-size: inherit;
     }
  
@@ -419,6 +491,11 @@ button:hover {
     }
     .post li {
         width: 100%;
+    }
+
+    .filter-label {
+       justify-content: start;
+       align-items: center;
     }
    
 

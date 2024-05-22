@@ -35,14 +35,22 @@
       <button id="add-post">Add</button>
     </form>
     <p class="tasks-remaining">
-      <span class="tasks-count">You have:-&nbsp;&nbsp; <b></b></span>&nbsp; task(s) remaining
+      
+      <span class="tasks-count">You have:-&nbsp;<b></b>&nbsp;task(s) remaining</span>
 
     </p>
     <ul id="posts" class="posts">
      
     </ul>
     <footer class="footer-section">
-       <span class="completedtasks">Completed Tasks:- &nbsp;&nbsp;<b></b></span>
+      <label for="filter" class="filter-label">
+        <b>Filter&nbsp;:-</b> 
+      <select id="filter">
+          <option value="All">All</option>
+          <option value="Complete">Complete</option>
+          <option value="Incomplete">Incomplete</option>
+      </select>
+   </label>
        <span class="delete-completed">Delete Completed:- &nbsp;&nbsp;</span>
     </footer>
   </div>
