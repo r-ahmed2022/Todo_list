@@ -17,6 +17,7 @@ addEventListener('load', () => {
     const post = document.querySelector(".post");
     const filter = document.getElementById('filter');
     const user = document.querySelector(".username");
+    const sentinel = document.getElementById('sentinel');
     user.value = username;
     var tasksCount  = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
     const date = new Date();
@@ -39,8 +40,11 @@ addEventListener('load', () => {
           return tasks;
     }
       function completedTaskCount(tasksCount) {
-        localStorage.setItem("tasksCount", JSON.stringify(tasksCount));
-        document.querySelector(".tasks-count b").textContent = tasksCount;
+         tasks = loadTasks();
+        if(tasks.length === 0 ) 
+            tasksCount = 0;
+          localStorage.setItem("tasksCount", JSON.stringify(tasksCount));
+           document.querySelector(".tasks-count b").textContent = tasksCount;
       }
 
         
@@ -54,11 +58,38 @@ addEventListener('load', () => {
            return  args.reduceRight((val, func) => func(val), data);
         }
        }
+     
+       const observer = new IntersectionObserver((entries) => {
+             entries.forEach(entry => {
+                   if(entry.isIntersecting) {
+                    posts.style.height = posts.scrollHeight + 200 + 'px';
+                   }
+             })
+       }, {
+        root: document.querySelector('.app'), 
+        threshold: 0.5
+      })
 
-     function getTasks(todoArray = "All") {
-        console.log(todoArray)
+      submitForm.addEventListener("submit", (e)=> {   
+        e.preventDefault();
+           const task = {
+            id: tasks.length + 1,
+            title: postTitle.value,
+            completed: false,
+            createdAt: new Date().toISOString(),
+                }
+         tasks.push(task);
+         saveTasks(tasks);
+         tasksCount += 1;
+         completedTaskCount(tasksCount);
+          getTasks();
+        e.target.reset();
+    });
+
+     //  observer.observe(sentinel);
+     function getTasks(todoArray = "all") {
         try {
-            tasks = loadTasks();
+               tasks = loadTasks();
             if(tasks.length === 0) {
                 setTimeout(() => {
                     posts.innerHTML = `<span class="empty"><i class="fa-solid fa-plus"></i></span>`;
@@ -112,34 +143,36 @@ addEventListener('load', () => {
 
     }
 
+    const updateCompleted = (event) => {
+        const currentElement = event.target;
+        const taskId = parseInt((currentElement.id).split("-")[1]);
+        tasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
+        const index = tasks.findIndex(task => task.id === taskId);
+          if(index !== -1) {
+           tasks[index].completed = currentElement.checked; 
+           saveTasks(tasks);
+           if(currentElement.checked) {
+            currentElement.nextElementSibling.classList.add("done");
+            if(tasks.length != 0)  {
+                tasksCount -=1;
+                completedTaskCount(tasksCount);
+             } else if(tasksCount === 0) tasksCount = 0;
+ 
+         } else {
+            currentElement.nextElementSibling.classList.remove("done");
+            tasksCount +=1;
+            completedTaskCount(tasksCount);
+            }
+          }
+       }
   
     posts.addEventListener('change', (event) => {
         if (event.target.classList.contains('completed')) {
             const currentElement = event.target;
-             const taskId = parseInt((currentElement.id).split("-")[1]);
-             let markTasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
-             const index = markTasks.findIndex(task => task.id === taskId);
-             if (index !== -1) {
-               markTasks[index].completed = currentElement.checked;
-              
-                 if(event.target.checked) {
-                    const sibling = currentElement.nextElementSibling;
-                    sibling.classList.add("done");
-                    if(tasks.length != 0)  {
-                       tasksCount -=1;
-                       completedTaskCount(tasksCount);
-                    } else if(tasksCount === 0) tasksCount = 0;
-
-                 } else {
-                    currentElement.nextElementSibling.classList.remove("done");
-                    tasksCount +=1;
-                    completedTaskCount(tasksCount);
-                }
-                 saveTasks(markTasks);
-                 console.log(obj)
-             }
-             else  console.error('Task not found', currentElement);
-
+             updateCompleted(event);
+             //posts.removeEventListener('change', updateCompleted)
+             
+            // console.error('Task not found', currentElement        
    }
    getTasks();
 
@@ -209,21 +242,7 @@ posts.addEventListener('click', (event) => {
 
     }
 
-    submitForm.addEventListener("submit", (e)=> {   
-        e.preventDefault();
-           const task = {
-            id: tasks.length + 1,
-            title: postTitle.value,
-            completed: false,
-            createdAt: new Date().toISOString(),
-                }
-         tasks.push(task);
-         saveTasks(tasks);
-         tasksCount += 1;
-         completedTaskCount(tasksCount);
-          getTasks();
-        e.target.reset();
-    });
+   
 
     
  slider.addEventListener('change', (e) => {

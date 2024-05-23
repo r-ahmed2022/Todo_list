@@ -159,13 +159,7 @@ addEventListener('load', () => {
     }
 
     getTasks();
-    const completedTask = document.querySelector("hello");
    
-    posts.addEventListener('change', (event) => {
-       
-});
-    
-
 
        function setMode(status) {
         if(status){
