@@ -1,12 +1,11 @@
 addEventListener('load', () => {
    
     let tasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
-    var username = JSON.parse(localStorage.getItem('username')) ?? '';
     const posts = document.getElementById("posts");
     const submitForm = document.getElementById("post-form");
     const postTitle = document.getElementById("title");
     const postBody = document.getElementById("body");
-    
+    const weatherInfo = document.getElementById("weather");
     const slider = document.querySelector(".slider");
     const label = document.querySelector(".slide-label");
     const container = document.querySelector(".app");
@@ -16,12 +15,12 @@ addEventListener('load', () => {
     const checkbox = document.querySelector("tasks");
     const post = document.querySelector(".post");
     const filter = document.getElementById('filter');
-    const user = document.querySelector(".username");
-    const sentinel = document.getElementById('sentinel');
-    user.value = username;
     var tasksCount  = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
     const date = new Date();
-
+    const apiKey = 'cf6967fd1784732aebe4bdb9186f3879';
+    const baseURL = `https://api.openweathermap.org/`;
+    const urlByGeoCode = 'geo/1.0/reverse'
+    const urlByCity = 'data/2.5/weather';
     const salutation = document.querySelector('.salutation');
     salutation.innerText = `${date.getHours() < 12 ? 'Morning' : date.getHours() > 12 && date.getHours() < 17 ? "Afternoon" : 'Evening'}`;
     let filterName = '';
@@ -58,7 +57,43 @@ addEventListener('load', () => {
            return  args.reduceRight((val, func) => func(val), data);
         }
        }
-     
+      let coords = {}
+         const getGeoLocation = () => {
+                if(navigator.geolocation) {
+                 navigator.geolocation.getCurrentPosition(getCurrentWeather
+                  , (error) => { console.log(error)})
+             }
+    }
+       const getCurrentWeather =  async (position) => {
+          const {latitude: lat, longitude: lon} = position.coords;
+         await fetch(`${baseURL}/${urlByGeoCode}?lat=${lat}&lon=${lon}&appid=${apiKey}`)
+          .then(response=> response.json())
+          .then(data => {
+             fetch(`${baseURL}/${urlByCity}?q=${data[0].name}&appid=${apiKey}&units=metric`)
+             .then(response => response.json())
+             .then(result => {
+                console.log(result)
+                const { temp } = result.main;
+                const place  = result.name;
+                const {country} = result.sys;
+                const { description, icon } = result.weather[0];
+                const iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+                const weather = document.querySelector(".weather");
+                const weathericon = document.querySelector(".weather-icon");
+                const city = document.querySelector(".city");
+                const countryFlag = document.querySelector(".country-flag");
+                countryFlag.src =  `https://catamphetamine.gitlab.io/country-flag-icons/3x2/${country}.svg`
+                city.innerHTML = place
+                weathericon.src = `${iconUrl}`
+                const tempCity = document.querySelector(".temp");
+                tempCity.innerHTML = temp;
+
+             })
+          })
+          .catch(err=> console.log(err))
+
+       }
+       getGeoLocation();
        const observer = new IntersectionObserver((entries) => {
              entries.forEach(entry => {
                    if(entry.isIntersecting) {
@@ -86,7 +121,6 @@ addEventListener('load', () => {
         e.target.reset();
     });
 
-     //  observer.observe(sentinel);
      function getTasks(todoArray = "all") {
         try {
                tasks = loadTasks();
@@ -231,6 +265,9 @@ posts.addEventListener('click', (event) => {
             document.documentElement.style.backgroundColor = "#000";
             body.style.backgroundColor = 'inherit';
             container.classList.add("mode");
+            document.querySelector(".city").style.color ="#F9C23C"
+            document.querySelector(".salutation").style.color ="#F9C23C"
+            
             } 
         if(!status){
             label.lastChild.textContent ="🌙";
@@ -238,6 +275,9 @@ posts.addEventListener('click', (event) => {
             document.documentElement.style.backgroundColor = "initial";
             body.style.backgroundColor = '#F7CB18';
             container.classList.remove("mode");
+            document.querySelector(".city").style.color ="#0073E5"
+            document.querySelector(".salutation").style.color = "#0073E5";
+
         } 
 
     }
@@ -255,9 +295,6 @@ posts.addEventListener('click', (event) => {
  })
  completedTaskCount(tasksCount);
 
- user.addEventListener('input', (e) => {
-     localStorage.setItem('username', JSON.stringify(e.target.value));
-     this.blur();
- })
+
  getTasks();
 });

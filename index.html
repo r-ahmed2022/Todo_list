@@ -23,15 +23,25 @@
 <body>
   <div id="app" class="app">
   <nav class="navbar">
-    <div class="user-div">
-      <h4 class="salutation"></h4>
-      <input type="text" class="username" placeholder="Enter User Name" />
-    </div>
-   <label class="slide-label" for="slide-label" name="slide-label">
+    <label class="slide-label" for="slide-label" name="slide-label">
+      <h6 class="salutation"></h6>
       <input type="checkbox" class="slider" id="slide-label" />
       <span class="toggle-btn" id="toggle-btn"></span>
       🌙
    </label>
+      <div class="weather">
+          <img  alt="weather icon" class="weather-icon" />
+          <div class="weather-info">
+            <span class="temp"></span>
+              
+           
+            <span class="city-name">
+              <label class="city"></label>
+              <img alt="country-flag" class="country-flag"/>
+            </span>
+          </div>
+      </div>
+ 
   </nav>
     <form id="post-form">
       <input type="text" id="title" placeholder="Add New To Do" name="title" required>
