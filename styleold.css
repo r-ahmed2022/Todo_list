@@ -46,17 +46,13 @@ body {
 
 #post-form {
     width: 90%;
-    position: relative;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 0rem 0 1rem;
     margin-bottom: 2rem;
 }
 
-#add-post {
-    position: absolute;
-    top: .5rem;
-    right: 1rem;
-}
+
 
 #body {
     padding: 10px;
@@ -101,7 +97,6 @@ body {
 .weather-icon {
      width: 4rem;
      height: 4rem;
-     display: block;
 }
 
 .temp {
@@ -123,14 +118,13 @@ body {
 
 button {
     display: inline-block;
-    text-align: center;
-    width: 3rem;
-    height: 3rem;
-    margin-left: auto;
+    width: 100px;
+    padding: 1rem;
+    margin: .5rem 0;
     background-color: var(--color-light);
     color: white;
     border: none;
-    border-radius: 50%;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
@@ -151,41 +145,27 @@ button:hover {
 
 
 #title {
-    width: 96%;
     display: inline-block;
-    padding: 1rem 1rem;
+    padding: 1rem;
+    margin-right: .5rem;
     font-size: 16px;
-    border: none;
-    border-bottom: 2px solid #F7CB18;
+    margin-bottom: 10px;
+    width: 75%;
+    margin: .5rem 0;
+    border: none;border-bottom: 2px solid #F7CB18;
+    border-radius: 5px;
     background-color: inherit;
     color: inherit;
-
 }
-
 
 #title:focus {
-    outline: none;
-    border-bottom:  2px solid #45A049;
+    box-shadow: none;
+    outline-color: #45A049;
 }
 
-
-#title:focus:invalid {
-    border-bottom: 2px solid orangered; 
+#title:invalid {
+    outline-color: orangered;
 }
-
-.title-label {
-    font-size: .7rem;
-    margin-top: 0.5rem;
-    color: inherit;
-    display: inline-block;
-    padding-bottom: 0.8rem;
-    transition: all 0.5s;
-  }
-  #title:placeholder-shown + .title-label {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-3rem);
-  }
 
 .post {
     height: 3rem;
@@ -315,48 +295,11 @@ button:hover {
 }
 
 .tasks-remaining {
-    width: 70%;
+    width: 80%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
-}
-
-
-input[type="checkbox"].selectall {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 1.2rem;
-    height: 1.2rem;
-    border: 2px solid #F7CB18;
-    border-radius: 4px;
-    background-color: white;
-    cursor: pointer;
-    position: relative;
-    outline: none;
-    cursor: pointer;
-}
-
-input[type="checkbox"].selectall:checked {
-    background-color: #0080FF;
-    border-color: #F7CB18;
-}
-
-input[type="checkbox"].selectall:checked::before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 1px;
-    width: 6px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.tasks-count {
-    text-align: center;
 }
 
 #filter {
@@ -429,7 +372,7 @@ input[type="checkbox"].selectall:checked::before {
     cursor: pointer;
     font-size: 1.7rem;
     color: #F9C23C;
-    margin-left: 2rem;
+    margin-left: 2.9rem;
 }
 .toggle-btn {
     display: inline-block;
@@ -524,10 +467,22 @@ input[type="checkbox"].selectall:checked::before {
     letter-spacing: .2rem;
 }
 
- .empty {
+ span.empty {
       color: var(--color-light);
+      display: inline-block;
+      padding: 1rem 2rem;
       transition: all .5s;
+      animation: zerotasks 2s ease-in-out infinite;
+      position: relative;
 }
+
+ .empty::before {
+     content: 'Add Task';
+     position: absolute;
+     bottom: .3rem;
+     left: 20%;
+     font-size: .8rem;
+ }
 @keyframes zerotasks {
     0% {
         transform: scale(.5);
@@ -547,7 +502,7 @@ input[type="checkbox"].selectall:checked::before {
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 1rem;
     background-color: inherit;
@@ -586,12 +541,17 @@ input[type="checkbox"].selectall:checked::before {
      }
     #post-form {
         width: 90%;
-        padding: 0;
+        flex-direction: column;
+        align-items: center;
     }
 
     #title {
-        width: 100%;
+        width: 90%;
         padding: .5rem;
+    }
+
+    #add-post {
+        align-self: center;
     }
 
     #posts {
@@ -637,29 +597,5 @@ input[type="checkbox"].selectall:checked::before {
     flex-direction: column;
    }
     
-   .tasks-remaining  {
-      align-items: center;
-   }
 
-   .tasks-count {
-    position: relative;
-   }
-   .tasks-count small {
-      display: none;
-   }
-
-   .filter-label {
-    position: relative;
-   }
-
-    .filter-label b {
-       position: absolute;
-       top: -1.1rem;
-       left: 40%;
-   }
-   #add-post {
-     top:  -.5rem;
-     right: -.7rem;
-   }
-  
 }
