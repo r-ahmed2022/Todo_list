@@ -126,7 +126,7 @@ addEventListener('load', () => {
                tasks = loadTasks();
             if(tasks.length === 0) {
                 setTimeout(() => {
-                    posts.innerHTML = `<span class="empty"><i class="fa-solid fa-plus"></i></span>`;
+                    posts.innerHTML = ``;
                 }, 100);
              } else {
                 posts.innerHTML = "";
@@ -281,6 +281,8 @@ posts.addEventListener('click', (event) => {
         } 
 
     }
+
+   
 
     
  slider.addEventListener('change', (e) => {
