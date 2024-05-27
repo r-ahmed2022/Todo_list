@@ -50,7 +50,7 @@ body {
 }
 
 .screen {
-    width: 35rem;
+    width: 43rem;
     height: 100%;
     background-color: #0080FF;
     border-radius: 0 50%  50% 0;
@@ -251,7 +251,7 @@ body {
     position: absolute;
     top: -.7rem;
     right: .3rem;
-    color: #0073E5;
+    color: #eee;
 }
 
 
