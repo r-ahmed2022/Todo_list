@@ -258,6 +258,9 @@ body {
         grid-template-columns:  1fr;
         margin: 1rem auto;
     }
+    .screen {
+        width: 30rem; 
+    }
     .navbar-home {
       
     }
