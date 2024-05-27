@@ -1,9 +1,15 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
+const params = getQueryParams();
+console.log(params.categoryId)
 export function loadTasks() {
     return JSON.parse(localStorage.getItem("tasks")) ?? [];
 }
 export function saveTasks(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function filterByCategory() {
+ return tasks.filter(task => task.category === params.categoryId);
 }
 export function getFilteredTasks(filter) {
 if(filter === 'complete')
@@ -26,6 +32,14 @@ return function(data) {
 return  args.reduceRight((val, func) => func(val), data);
 }
 }
+ function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const queryParams = {};
+    for (const [key, value] of params.entries()) {
+        queryParams[key] = value;
+    }
+    return queryParams;
+}
 
 export function getTasks(todoArray = "all") {
     try {
@@ -36,7 +50,7 @@ export function getTasks(todoArray = "all") {
             }, 100);
          } else {
             posts.innerHTML = "";
-            composeTasks(sortTasks, getFilteredTasks)(todoArray).map(todo => {
+            composeTasks(sortTasks, filterByCategory, getFilteredTasks)(todoArray).map(todo => {
             const liTask = document.createElement("li")
             liTask.classList.add("post");
             liTask.setAttribute("id", `${todo.id}`);

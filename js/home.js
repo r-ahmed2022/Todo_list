@@ -6,8 +6,13 @@ const container = document.querySelector(".container");
 container.addEventListener("click", (e) => {
     const currentElement = e.target;
     if (!currentElement.classList.contains('container')
-      && !currentElement.classList.contains('screen')) {
-        document.location = 'index.html';
+      && !currentElement.classList.contains('screen') &&
+    !currentElement.classList.contains('username')) {
+        const categoryId = currentElement.getAttribute('id');
+        if (categoryId) {
+            const targetURL = `home.html?categoryId=${encodeURIComponent(categoryId)}`;
+            document.location = targetURL;
+        }
     }
 })
     
@@ -42,3 +47,45 @@ window.addEventListener('storage', (e) => {
     }
 } )
 
+function createCategory(task) {
+     const {item, count} = task;
+     const category = document.createElement("div");
+     category.setAttribute("id", item);
+     category.classList.add("category");
+     const icon =  document.createElement("span");
+     icon.classList.add("category-icon");
+     const img =  document.createElement("img");
+     img.classList.add("category-icon-img");
+     img.src = `img/${item.toLowerCase() === 'personal' ? "boy.png" : item.toLowerCase()  === 'business' ? "briefcase.png" : item.toLowerCase()  === 'health' ? "healthcare.png" : "web-design.png"}`;
+     icon.appendChild(img);
+     category.appendChild(icon);
+     const heading =  document.createElement("h4");
+     heading.innerHTML = item.toUpperCase();
+     heading.classList.add("category-heading");
+     category.appendChild(heading)
+     const categoryCount =  document.createElement("span");
+     categoryCount.classList.add("count");
+     categoryCount.innerText = 'Total Tasks#'
+     categoryCount.innerText += `${count}`;
+     category.appendChild(categoryCount);
+     return category;
+}
+
+function renderCategories() {
+    const categoriesCount = tasks.reduce((acc, todo) => {
+         const category = todo.category;
+         if(!acc[category]) acc[category] = 0;
+          acc[category]++;
+          return acc;
+    }, {})
+
+    const totalCategories = Object.keys(categoriesCount);
+     console.log(totalCategories)
+
+    for (const [item, count] of Object.entries(categoriesCount )) {
+        const categoryElement = createCategory({item: item, count: count});
+        container.appendChild(categoryElement);
+    }
+}
+
+ renderCategories();

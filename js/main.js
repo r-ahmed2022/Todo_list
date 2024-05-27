@@ -32,6 +32,8 @@ addEventListener('load', () => {
     document.querySelector(".tasks-count b").textContent = tasksCount;
     }
 
+    
+   
    
       
       submitForm.addEventListener("submit", (e)=> {   
@@ -50,6 +52,7 @@ addEventListener('load', () => {
          filter.style.visibility = 'visible';
           getTasks();
         e.target.reset();
+        document.location = "index.html";
     });
 
     

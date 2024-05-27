@@ -4,73 +4,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSONPlaceholder App</title>
+  <title>Home Todo App</title>
   <link rel="stylesheet" href="css/style.css">
-  <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-    
-    <symbol id="icon-trash" viewBox="0 0 20 20">
-    <path d="M3.389 7.113l1.101 10.908c0.061 0.461 2.287 1.977 5.51 1.979 3.225-0.002 5.451-1.518 5.511-1.979l1.102-10.908c-1.684 0.942-4.201 1.387-6.613 1.387-2.41 0-4.928-0.445-6.611-1.387zM13.168 1.51l-0.859-0.951c-0.332-0.473-0.692-0.559-1.393-0.559h-1.831c-0.7 0-1.061 0.086-1.392 0.559l-0.859 0.951c-2.57 0.449-4.434 1.64-4.434 2.519v0.17c0 1.547 3.403 2.801 7.6 2.801 4.198 0 7.601-1.254 7.601-2.801v-0.17c0-0.879-1.863-2.070-4.433-2.519zM12.070 4.34l-1.070-1.34h-2l-1.068 1.34h-1.7c0 0 1.862-2.221 2.111-2.522 0.19-0.23 0.384-0.318 0.636-0.318h2.043c0.253 0 0.447 0.088 0.637 0.318 0.248 0.301 2.111 2.522 2.111 2.522h-1.7z"></path>
-    </symbol>    
-    <symbol id="icon-pencil" viewBox="0 0 32 32">
-    <path d="M27 0c2.761 0 5 2.239 5 5 0 1.126-0.372 2.164-1 3l-2 2-7-7 2-2c0.836-0.628 1.874-1 3-1zM2 23l-2 9 9-2 18.5-18.5-7-7-18.5 18.5zM22.362 11.362l-14 14-1.724-1.724 14-14 1.724 1.724z"></path>
-    </symbol>
-   
-    </defs>
-    </svg>
+  <link rel="stylesheet" href="css/home.css">
 </head>
 
 <body>
-  <div id="app" class="app">
-  <nav class="navbar">
-    <div>
-      <a href="home.html"><span class="icon"><i class="fa-solid fa-arrow-left-long"></i></span></a>
-     <span class="username">
-    </span>
-  
-  </div>
-    <label class="slide-label" for="slide-label" name="slide-label">
-      <input type="checkbox" class="slider" id="slide-label" />
-      <span class="toggle-btn" id="toggle-btn"></span>
-      🌙
-   </label>
-
-  </nav>
-    <form id="post-form">
-      <input type="text" id="title" placeholder="Add New To Do" name="title" required pattern=".{3,}">
-      <label for="fullname" class="title-label">Add New To Do</label>
-      <select class="category-input" required>
-        <option value="">--Choose category--</option>
-        <option value="business">Business</option>
-        <option value="personal">Personal></option>
-        <option value="health">Health</option>
-        <option value="coding">Coding</option>
-      </select>
-      <button id="add-post">
-        <i class="fa-solid fa-plus"></i>
-      </button>
-    </form>
-    <p class="tasks-remaining">
-   
-      <label for="filter" class="filter-label">
-        <b>Filter&nbsp;:-</b> 
-      <select id="filter">
-          <option value="All">All</option>
-          <option value="Complete">Complete</option>
-          <option value="Incomplete">Incomplete</option>
-      </select>
-   </label>
-    </p>
-    <ul id="posts" class="posts">
-    </ul>
-    <footer class="footer-section">
-      <span class="tasks-count"><small>You have:-&nbsp;</small><b></b>&nbsp;task(s) remaining</span>
-
-    </footer>
+  <div id="container" class="container">
+   <div class="screen"></div>
+   <nav class="navbar-home">
+      <div class="weather">
+         <img  alt="weather icon" class="weather-icon" />
+         <div class="weather-info">
+           <span class="temp"></span>          
+           <span class="city-name">
+             <label class="city"></label>
+             <img alt="country-flag" class="country-flag"/>
+           </span>
+         </div>
+     </div>
+    <div class="menu-div">
+         <label class="hamburger" for="hamburger-label"> 
+            <span class="menu"></span>
+         </label>
+     </div>
+       
+    </nav>
+    <div class="salutation-div">
+        <h6 class="salutation home-salutation"></h6>
+        <input type="text" class="username" placeholder="Enter Name"/>
+        <span class="totaltasks" id="totaltasks">Tasks Remaining# &nbsp;<b></b></span>
+   </div>
+    
   </div>
   <script src="https://kit.fontawesome.com/2957254bda.js" crossorigin="anonymous"></script>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/home.js"></script>
 
 </body>
-
 </html>
