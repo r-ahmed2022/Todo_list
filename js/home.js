@@ -48,7 +48,11 @@ window.addEventListener('storage', (e) => {
 } )
 
 function createCategory(task) {
-     const {item, count} = task;
+    if(!task) {
+         task = {item: "Personal", count: 0};
+        } 
+     const {item, count} = task ;
+     console.log(task)
      const category = document.createElement("div");
      category.setAttribute("id", item);
      category.classList.add("category");
@@ -80,12 +84,18 @@ function renderCategories() {
     }, {})
 
     const totalCategories = Object.keys(categoriesCount);
-     console.log(totalCategories)
+    if (totalCategories.length === 0)
+        {
+            container.appendChild(createCategory());
 
-    for (const [item, count] of Object.entries(categoriesCount )) {
-        const categoryElement = createCategory({item: item, count: count});
-        container.appendChild(categoryElement);
+        }
+    else{
+        for (const [item, count] of Object.entries(categoriesCount )) {
+            const categoryElement = createCategory({item: item, count: count});
+            container.appendChild(categoryElement);
+        }
     }
+  
 }
 
  renderCategories();

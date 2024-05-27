@@ -1,6 +1,5 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
 const params = getQueryParams();
-console.log(params.categoryId)
 export function loadTasks() {
     return JSON.parse(localStorage.getItem("tasks")) ?? [];
 }
