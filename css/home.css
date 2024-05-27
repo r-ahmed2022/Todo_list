@@ -80,11 +80,11 @@ body {
       box-shadow: 0px 0px 2px 2px #ccc;
       overflow: auto;
       transition: all .5s ease-in;
-      transform: translateX(-59%);
+      transform: translateX(-67%);
 }
 
 .category:hover {
-    transform: translate(-41%);
+    transform: translate(-61%);
     background-color: #fff;
 }
 .category-icon {
@@ -253,18 +253,25 @@ body {
 
 @media(max-width: 500px) {
     .container {
-        width: 70%;
+        width: 80%;
         scroll-behavior: auto;
         grid-template-columns:  1fr;
         margin: 1rem auto;
     }
     .screen {
-        width: 30rem; 
+        width: 35rem; 
     }
     .navbar-home {
       
     }
     .category {
-        width: 70%;
+        width: 50%;
+        height: auto;
+        font-size: 75%;
+    }
+
+    .category > .category-icon-img {
+        width: 50%;
+        height: 50%;
     }
 }
