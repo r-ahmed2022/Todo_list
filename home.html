@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Todo App</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+  <div id="container" class="container">
+   <div class="screen"></div>
+   <nav class="navbar-home">
+      <div class="weather">
+         <img  alt="weather icon" class="weather-icon" />
+         <div class="weather-info">
+           <span class="temp"></span>          
+           <span class="city-name">
+             <label class="city"></label>
+             <img alt="country-flag" class="country-flag"/>
+           </span>
+         </div>
+     </div>
+    <div class="menu-div">
+         <label class="hamburger" for="hamburger-label"> 
+            <span class="menu"></span>
+         </label>
+     </div>
+       
+    </nav>
+    <div class="salutation-div">
+        <h6 class="salutation home-salutation"></h6>
+        <input type="text" class="username" placeholder="Enter Name"/>
+        <span class="totaltasks" id="totaltasks">Total Tasks# &nbsp;<b></b></span>
+   </div>
+     <div class="category" id="business">
+        <span class="category-icon"><img class="categoty-icon-img" src="img/briefcase.png" alt="briefcase"/></span>
+        <h4 class="category-heading">Business</h4>
+        <span class="count">Tasks# &nbsp;</span>
+     </div>
+     <div class="category" id="personal">
+       
+        <span class="category-icon"><img class="categoty-icon-img" src="img/boy.png" alt="personal"/></span>
+        <h4 class="category-heading">Personal</h4>
+        <span class="count">Tasks# &nbsp;</span>
+     </div>
+     <div class="category" id="health">
+        <span class="category-icon"><img class="categoty-icon-img" src="img/healthcare.png" alt="coding"/></span>
+        <h4 class="category-heading">Health</h4>
+        <span class="count">Tasks# &nbsp;</span>
+
+     </div>
+     <div class="category" id="coding">
+      <span class="category-icon"><img class="categoty-icon-img" src="img/web-design.png" alt="coding"/></span>
+      <h4 class="category-heading">Coding</h4>
+      <span class="count">Tasks# &nbsp;</span>
+
+   </div>
+   
+  </div>
+  <script src="https://kit.fontawesome.com/2957254bda.js" crossorigin="anonymous"></script>
+  <script type="module" src="js/home.js"></script>
+
+</body>
+</html>

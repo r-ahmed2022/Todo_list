@@ -25,9 +25,15 @@ body {
     position: relative;
 }
 
+.icon {
+    color: #F9C23C;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
 
 .app {
-    max-width: 800px;
+    max-width: 700px;
     margin: 7rem auto;
     padding: 20px;
     background-color: #fff;
@@ -39,6 +45,11 @@ body {
     align-items: center;
 }
 
+.username {
+    font-size: 1.5rem;
+    color: #F7CB18;
+    font-weight: 700;
+}
 .mode {
     background-color: #333 !important;
     color: #fff !important;
@@ -58,6 +69,23 @@ body {
     right: 1rem;
 }
 
+.category-input {
+    display: inline-block;
+    padding: .7rem .4rem;
+    background-color: #F7CB18;
+    color:#0080FF;
+    margin-top: .2rem;
+    margin-bottom: -1rem;
+    border: none;
+    outline: none;
+    border-radius: 0 100px 100px 0;
+    position: absolute;
+    top: .6rem;
+    right: 2.5rem;
+    opacity: 0;
+    visibility: hidden;
+}
+
 #body {
     padding: 10px;
     margin-bottom: 10px;
@@ -66,58 +94,6 @@ body {
     font-size: 16px;
 }
 
-.weather {
-    height: auto;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding-left: 1.7rem;
-}
-
-.city {
-    font-size: 1rem;
-     color: #0073E5;
-     font-weight: 500;
-}
-
-.city-name {
-    position: relative;
-}
-
-.country-flag {
-    position: absolute;
-    top: -.5rem;
-    right: o;
-    width: 30px;
-    height: 20px;
-}
-
-.weather-info {
-    margin-left: .5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.weather-icon {
-     width: 4rem;
-     height: 4rem;
-     display: block;
-}
-
-.temp {
-    display: inline-block;
-    font-size: 1rem;
-    font-weight: 700;
-    position: relative;
-}
-
-.temp::before {
-    content: '℃';
-    font-weight: 300;
-    position: absolute;
-    top: -.5rem;
-    right: .5rem;
-}
 
 
 
@@ -173,6 +149,11 @@ button:hover {
     border-bottom: 2px solid orangered; 
 }
 
+#title:not(:placeholder-shown) + .title-label + .category-input {
+    opacity: 1;
+    visibility: visible;
+}
+
 .title-label {
     font-size: .7rem;
     margin-top: 0.5rem;
@@ -204,28 +185,21 @@ button:hover {
 .moveOnDelete {
     transform: translateY(4rem);
 }
-
-.user-div {
-    display: flex;
-    align-items: center;
-}
-
 .salutation {
+  font-size: 1.5rem;
+  font-weight: 500;
   margin-right: .5rem;
-  color:#0073E5;
-  
+  color: #F9C23C;
+  display: inline;
 }
 
-.user-div input {
-    display: inline-block;
-    padding-bottom: .2rem;
-    flex: 0;
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #ccc;
-    background-color: transparent;
+.home-salutation {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #fff;
+    font-weight: 500;
+    margin-right: 0;
 }
-
  .delete-btn {
     display: inline-block;
     padding: .4rem;
@@ -315,12 +289,13 @@ button:hover {
 }
 
 .tasks-remaining {
-    width: 70%;
+    width: 90%;
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
     margin-bottom: 1rem;
 }
+
 
 
 input[type="checkbox"].selectall {
@@ -425,7 +400,6 @@ input[type="checkbox"].selectall:checked::before {
 
 
 .slide-label {
-    flex: 1 0 0%;
     cursor: pointer;
     font-size: 1.7rem;
     color: #F9C23C;
@@ -563,23 +537,25 @@ input[type="checkbox"].selectall:checked::before {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        max-width: 400px;
+        width: 380px;
         font-size: inherit;
     }
  
-    .navbar{
-        align-items: center;
-        position: relative;
+    .navbar {
         width: 100%;
         margin: .5rem auto;
     }
 
-    .slide-label {
-        position: absolute;
-        top: -1rem;
-        right: 0;
-    }
+   
 
+    .weather-info > * {
+        font-size: .9rem;
+    }
+    .weather-icon {
+        width: 3rem;
+        height: 3rem;
+        display: block;
+   }
        
      h1 {
         margin-bottom: .4rem;
@@ -587,16 +563,28 @@ input[type="checkbox"].selectall:checked::before {
     #post-form {
         width: 90%;
         padding: 0;
+        margin-top: 4rem;
+        
     }
+
+    .category-input {
+        position: initial;
+        border-radius: 0;
+    }
+
 
     #title {
         width: 100%;
         padding: .5rem;
     }
 
+  
+
     #posts {
         width: 90%;
         padding: 1rem;
+        padding-bottom: 0;
+        margin-top: 0;
     }
     .post {
         width: 90%;
@@ -633,13 +621,19 @@ input[type="checkbox"].selectall:checked::before {
         font-size: inherit;
     }
 
+   
    .weather-info {
     flex-direction: column;
    }
     
    .tasks-remaining  {
+     justify-content:  start;
       align-items: center;
+      margin-bottom: -1rem;
+      padding: 0;
+      visibility: hidden;
    }
+
 
    .tasks-count {
     position: relative;

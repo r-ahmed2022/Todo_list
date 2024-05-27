@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JSONPlaceholder App</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
     
@@ -23,34 +23,35 @@
 <body>
   <div id="app" class="app">
   <nav class="navbar">
+    <div>
+      <a href="home.html"><span class="icon"><i class="fa-solid fa-arrow-left-long"></i></span></a>
+     <span class="username">
+    </span>
+  
+  </div>
     <label class="slide-label" for="slide-label" name="slide-label">
-      <h6 class="salutation"></h6>
       <input type="checkbox" class="slider" id="slide-label" />
       <span class="toggle-btn" id="toggle-btn"></span>
       🌙
    </label>
-      <div class="weather">
-          <img  alt="weather icon" class="weather-icon" />
-          <div class="weather-info">
-            <span class="temp"></span>          
-            <span class="city-name">
-              <label class="city"></label>
-              <img alt="country-flag" class="country-flag"/>
-            </span>
-          </div>
-      </div>
- 
+
   </nav>
     <form id="post-form">
       <input type="text" id="title" placeholder="Add New To Do" name="title" required pattern=".{3,}">
       <label for="fullname" class="title-label">Add New To Do</label>
+      <select class="category-input" required>
+        <option value="">--Choose category--</option>
+        <option value="business">Business</option>
+        <option value="personal">Personal></option>
+        <option value="health">Health</option>
+        <option value="coding">Coding</option>
+      </select>
       <button id="add-post">
         <i class="fa-solid fa-plus"></i>
       </button>
     </form>
     <p class="tasks-remaining">
    
-      <span class="tasks-count"><small>You have:-&nbsp;</small><b></b>&nbsp;task(s) remaining</span>
       <label for="filter" class="filter-label">
         <b>Filter&nbsp;:-</b> 
       <select id="filter">
@@ -63,11 +64,12 @@
     <ul id="posts" class="posts">
     </ul>
     <footer class="footer-section">
-       <span class="delete-completed">Delete Completed:- &nbsp;&nbsp;</span>
+      <span class="tasks-count"><small>You have:-&nbsp;</small><b></b>&nbsp;task(s) remaining</span>
+
     </footer>
   </div>
   <script src="https://kit.fontawesome.com/2957254bda.js" crossorigin="anonymous"></script>
-  <script src="script_v3.js"></script>
+  <script type="module" src="js/main.js"></script>
 
 </body>
 
