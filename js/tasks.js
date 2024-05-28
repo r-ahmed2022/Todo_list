@@ -52,7 +52,7 @@ export function getTasks(todoArray = "all") {
          } else {
             posts.innerHTML = "";
             posts.innerHTML = `<h3 class="taskheading">
-           ${params.categoryId.toUpperCase()}:-  <span><small>Total Tasks</small>
+           ${params.categoryId.toUpperCase()} <span><small>Total Tasks</small>
             # <i class="taskslength">${tasksByCategory()}</i></span>
             </h3>`
             composeTasks(sortTasks, filterByCategory, getFilteredTasks)(todoArray).map(todo => {

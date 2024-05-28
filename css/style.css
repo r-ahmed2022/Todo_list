@@ -272,6 +272,12 @@ button:hover {
     width: 79%;
     display: flex;
     justify-content: space-between;
+    color: var(--color-light);
+
+}
+
+.taskheading small {
+    color:#F9C23C;
 }
 
  .icon-pencil::after,
