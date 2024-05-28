@@ -6,7 +6,9 @@ export function loadTasks() {
 export function saveTasks(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
-
+const tasksByCategory = () => {
+    return tasks.filter(task => task.category === params.categoryId).length;
+};
 function filterByCategory() {
  return tasks.filter(task => task.category === params.categoryId);
 }
@@ -31,7 +33,7 @@ return function(data) {
 return  args.reduceRight((val, func) => func(val), data);
 }
 }
- function getQueryParams() {
+ export function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
     const queryParams = {};
     for (const [key, value] of params.entries()) {
@@ -49,6 +51,10 @@ export function getTasks(todoArray = "all") {
             }, 100);
          } else {
             posts.innerHTML = "";
+            posts.innerHTML = `<h3 class="taskheading">
+           ${params.categoryId.toUpperCase()}:-  <span><small>Total Tasks</small>
+            # <i class="taskslength">${tasksByCategory()}</i></span>
+            </h3>`
             composeTasks(sortTasks, filterByCategory, getFilteredTasks)(todoArray).map(todo => {
             const liTask = document.createElement("li")
             liTask.classList.add("post");

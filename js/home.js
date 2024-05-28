@@ -3,6 +3,7 @@ import {  getGeoLocation, getCurrentWeather } from './utils.js';
 
 const salutation = document.querySelector('.salutation');
 const container = document.querySelector(".container");
+var countCategory = 0;
 container.addEventListener("click", (e) => {
     const currentElement = e.target;
     if (!currentElement.classList.contains('container')
@@ -52,7 +53,6 @@ function createCategory(task) {
          task = {item: "Personal", count: 0};
         } 
      const {item, count} = task ;
-     console.log(task)
      const category = document.createElement("div");
      category.setAttribute("id", item);
      category.classList.add("category");
@@ -84,6 +84,8 @@ function renderCategories() {
     }, {})
 
     const totalCategories = Object.keys(categoriesCount);
+   
+
     if (totalCategories.length === 0)
         {
             container.appendChild(createCategory());
