@@ -89,6 +89,9 @@ function renderCategories() {
     if (totalCategories.length === 0)
         {
             container.appendChild(createCategory());
+            setTimeout(() => {
+                document.location = "home.html";
+            }, 5000);
 
         }
     else{
