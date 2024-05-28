@@ -91,7 +91,7 @@ function renderCategories() {
             container.appendChild(createCategory());
             setTimeout(() => {
                 document.location = "home.html";
-            }, 5000);
+            }, 2000);
 
         }
     else{
