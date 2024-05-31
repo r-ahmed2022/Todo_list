@@ -2,12 +2,14 @@ import {  getGeoLocation, getCurrentWeather } from './utils.js';
 import {  loadTasks, saveTasks,  getTasks} from './tasks.js';
 
 addEventListener('load', () => {
-    var tasks = JSON.parse(localStorage.getItem("tasks")) ?? 0;
+    var tasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
     var tasksCount  = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
     var username = JSON.parse(localStorage.getItem("username")) ?? '';
     const posts = document.getElementById("posts");
-    const submitForm = document.getElementById("post-form");
     const postTitle = document.getElementById("title");
+    const formBack = document.querySelector(".form-back");
+    const submitForm = document.querySelector(".post-form");
+    const homeBtn = document.querySelector(".homeBtn");
     const postBody = document.getElementById("body");
     const weatherInfo = document.getElementById("weather");
     const slider = document.querySelector(".slider");
@@ -34,26 +36,9 @@ addEventListener('load', () => {
 
     
    
-   
+     
       
-      submitForm.addEventListener("submit", (e)=> {   
-        e.preventDefault();
-           const task = {
-            id: tasks.length + 1,
-            title: postTitle.value,
-            completed: false,
-            category: category.value,
-            createdAt: new Date().toISOString(),
-                }
-         tasks.push(task);
-         saveTasks(tasks);
-         tasksCount += 1;
-         completedTaskCount(tasksCount);
-         filter.style.visibility = 'visible';
-          getTasks();
-        e.target.reset();
-        document.location = "index.html";
-    });
+      
 
     
 
@@ -79,6 +64,25 @@ addEventListener('load', () => {
             }
           }
        }
+       submitForm.addEventListener("submit", async (e)=> {   
+        e.preventDefault();
+           const task = {
+            id: tasks.length + 1,
+            title: postTitle.value,
+            completed: false,
+            category: category.value,
+            createdAt: new Date().toISOString(),
+                }
+         tasks.push(task);
+         saveTasks(tasks);
+         toggleClasses();
+         tasksCount += 1;
+         completedTaskCount(tasksCount);
+         filter.style.visibility = 'visible';
+          getTasks();
+          e.target.reset();
+      
+    });
   
     posts.addEventListener('change', (event) => {
         if (event.target.classList.contains('completed')) {
@@ -170,7 +174,19 @@ posts.addEventListener('click', (event) => {
       const filterName = e.target.value;
       getTasks(filterName.trim().toLowerCase());
  })
+  
 
+ 
+const toggleClasses = () => {
+    homeBtn.classList.toggle("active");
+    formBack.classList.toggle("active");
+    submitForm.classList.toggle("active");
+  
+ }
+
+ homeBtn.addEventListener("click", toggleClasses);
+
+formBack.addEventListener("click", toggleClasses)
  completedTaskCount(tasksCount);
 
  getTasks();

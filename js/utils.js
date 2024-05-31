@@ -18,7 +18,6 @@ export const getCurrentWeather =  async (position) => {
      fetch(`${baseURL}/${urlByCity}?q=${data[0].name}&appid=${apiKey}&units=metric`)
      .then(response => response.json())
      .then(result => {
-        console.log(result)
         const { temp } = result.main;
         const place  = result.name;
         const {country} = result.sys;

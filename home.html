@@ -4,9 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSONPlaceholder App</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>To Do App</title>
   <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+  
 
 </head>
 
@@ -26,21 +28,8 @@
    </label>
 
   </nav>
-    <form id="post-form">
-      <input type="text" id="title" placeholder="Add New To Do" name="title" required pattern=".{3,}">
-      <label for="fullname" class="title-label">Add New To Do</label>
-      <select class="category-input" required>
-        <option value="">--Choose category--</option>
-        <option value="business">Business</option>
-        <option value="personal">Personal</option>
-        <option value="health">Health</option>
-        <option value="coding">Coding</option>
-      </select>
-      <button id="add-post">
-        <i class="fa-solid fa-plus"></i>
-      </button>
-    </form>
-    <p class="tasks-remaining">
+
+      <p class="tasks-remaining">
    
       <label for="filter" class="filter-label">
         <b>Filter&nbsp;:-</b> 
@@ -53,13 +42,40 @@
     </p>
     <ul id="posts" class="posts">
     </ul>
+    <div class="form-back">
+  
+    </div>
+     <form class="post-form">
+       <div class="post-form-backdrop">
+       </div>
+       <input type="text" id="title" placeholder="Add New To Do" name="title" required pattern=".{3,}">
+       <label for="fullname" class="title-label">Add New To Do</label>
+       <select class="category-input" required>
+         <option value="">--Choose category--</option>
+         <option value="business">Business</option>
+         <option value="personal">Personal</option>
+         <option value="shopping">Shopping</option>
+         <option value="finances">Finance</option>
+         <option value="education">Education</option>
+         <option value="health">Health</option>
+         <option value="coding">Coding</option>
+         <option value="fitness">Fitness</option>
+   
+       </select>
+       <button class="add-post" id="add-post">
+         ADD
+       </button>
+     
+     </form>
     <footer class="footer-section">
       <span class="tasks-count"><small>You have:-&nbsp;</small><b></b>&nbsp;task(s) remaining</span>
-
     </footer>
-  </div>
+    <button class="homeBtn" data-tooltip="Add New Task">
+      <i class="fa-solid fa-plus"></i>
+    </button>
   <script src="js/all.min.js" crossorigin="anonymous"></script>
   <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/home.js"></script>
 
 </body>
 
