@@ -3,11 +3,12 @@ import { getGeoLocation, getCurrentWeather } from './utils.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     let tasks = loadTasks();
-
+   
     const salutation = document.querySelector('.salutation');
     const container = document.querySelector(".container");
-    const app = document.querySelector(".app");
-
+    const categoryContainer = document.createElement('div');
+    categoryContainer.classList.add('category-container');
+    container.appendChild(categoryContainer);
     const submitForm = document.querySelector(".post-form");
     const indexBtn = document.querySelector(".indexBtn");
     const formBack = document.querySelector(".form-back");
@@ -18,14 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let tasksCount = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
 
     function completedTaskCount(tasksCount) {
-        tasks = loadTasks();
         if (tasks.length === 0) tasksCount = 0;
         localStorage.setItem("tasksCount", JSON.stringify(tasksCount));
-        document.querySelector(".tasks-count b").textContent = tasksCount;
     }
 
     const tasksByCategory = (id) => {
-        tasks = loadTasks();
         return tasks.filter(task => task.category === id).length;
     };
 
@@ -35,50 +33,28 @@ document.addEventListener("DOMContentLoaded", () => {
         errorSpan.style.display = "inline";
         errorSpan.style.zIndex = "100"
         setTimeout(() => {
-            errorSpan.remove();
+            errorSpan.textContent = "";
+            errorSpan.style.display = "none "
         }, 2000);
     }
 
-    submitForm.addEventListener("submit", async (e)=> {   
-        e.preventDefault();
-           const task = {
-            id: tasks.length + 1,
-            title: postTitle.value,
-            completed: false,
-            category: category.value,
-            createdAt: new Date().toISOString(),
-                }
-         tasks.push(task);
-        await notifyUser(category.value, postTitle.value);
-         saveTasks(tasks);
-         toggleClasses();
-         tasksCount += 1;
-         completedTaskCount(tasksCount);
-         filter.style.visibility = 'visible';
-          getTasks();
-          e.target.reset();
-      
-    });
-
-
+  
     container.addEventListener("click", (e) => {
         if (e.target.classList.contains('category')) {
             const currentElement = e.target;
             const categoryId = currentElement.getAttribute('id');
-                    if (categoryId) {
-                     if(tasksByCategory(categoryId) === 0)
-                     showError(`${categoryId} has 0 tasks, Add task now` );
-                     else {
+            if(tasksByCategory(categoryId) === 0) {
+                showError(`${categoryId} has 0 tasks, Add task now` );
+                 return;
+            }
+             if (categoryId) {
                         const targetURL = `home.html?categoryId=${encodeURIComponent(categoryId)}`;
                        document.location = targetURL;
-                     }
-                   
-         
                 }
                 
             }
        
-    }, false);
+    });
 
     const date = new Date();
     salutation.innerText = date.getHours() < 12 ? 'Morning' : date.getHours() < 17 ? 'Afternoon' : 'Evening';
@@ -88,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let user = JSON.parse(localStorage.getItem("username")) ?? '';
     if (localStorage.getItem("tasksCount")) updateCount(localStorage.getItem('tasksCount'));
 
-    let parentTasks = loadTasks();
     getGeoLocation();
 
     function updateCount(newValue) {
@@ -119,7 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     */
 
-    function createCategory(task = { item: "Personal", count: 0 }) {
+    function createCategory(task = {item: "Personal", count: 0}) {
+
         const categoryIcon = {
             personal: "boy.png",
             business: "briefcase.png",
@@ -130,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
             finances: "saving.png",
             shopping: "shopping.png"
         };
-
         const { item, count } = task;
         const category = document.createElement("div");
         category.setAttribute("id", item);
@@ -160,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderCategories() {
+        categoryContainer.innerHTML = "";
         const categoriesCount = tasks.reduce((acc, todo) => {
             const category = todo.category;
             if (!acc[category]) acc[category] = 0;
@@ -169,15 +145,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const totalCategories = Object.keys(categoriesCount);
       
-
-        if (totalCategories.length === 0) {
-            container.appendChild(createCategory());
-        } else {
+            if(!totalCategories.length) 
+             categoryContainer.appendChild(createCategory());
+           else
+           {
             for (const [item, count] of Object.entries(categoriesCount)) {
                 const categoryElement = createCategory({ item: item, count: count });
-                container.appendChild(categoryElement);
+                categoryContainer.appendChild(categoryElement);
             }
-        }
+           }
+         
+        
     }
 
     async function notifyUser(category, todo) {
@@ -208,8 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
         tasksCount += 1;
         completedTaskCount(tasksCount);
         getTasks();
+       renderCategories();
         e.target.reset();
-        document.location = "index.html";
     });
 
 const toggleClasses = () => {
@@ -223,9 +201,7 @@ const toggleClasses = () => {
 
    formBack.addEventListener("click", toggleClasses)
 
-
-    renderCategories();
-
+  renderCategories();
 });
 
     

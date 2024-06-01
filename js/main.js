@@ -35,12 +35,6 @@ addEventListener('load', () => {
     }
 
     
-   
-     
-      
-      
-
-    
 
     const updateCompleted = (event) => {
         const currentElement = event.target;
@@ -81,6 +75,7 @@ addEventListener('load', () => {
          filter.style.visibility = 'visible';
           getTasks();
           e.target.reset();
+          renderCategories();
       
     });
   
@@ -188,7 +183,5 @@ const toggleClasses = () => {
 
 formBack.addEventListener("click", toggleClasses)
  completedTaskCount(tasksCount);
-
  getTasks();
-
 });
