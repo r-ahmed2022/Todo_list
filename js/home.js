@@ -2,7 +2,7 @@ import { getTasks, loadTasks, saveTasks } from './tasks.js';
 import { getGeoLocation, getCurrentWeather } from './utils.js';
 
 document.addEventListener("DOMContentLoaded", () => {
-    let tasks = loadTasks();
+    var tasks = loadTasks();
    
     const salutation = document.querySelector('.salutation');
     const container = document.querySelector(".container");
@@ -14,13 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const formBack = document.querySelector(".form-back");
     const postTitle = document.getElementById("title");
     const categoryInput = document.querySelector(".category-input");
-    var tasksPerCategoryCount = 0;
     const category = document.querySelector(".category");
     let tasksCount = JSON.parse(localStorage.getItem("tasksCount")) ?? 0;
 
     function completedTaskCount(tasksCount) {
         if (tasks.length === 0) tasksCount = 0;
         localStorage.setItem("tasksCount", JSON.stringify(tasksCount));
+        updateCount(tasksCount);
     }
 
     const tasksByCategory = (id) => {
@@ -83,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('storage', (e) => {
         if (e.key === 'tasksCount') {
             updateCount(e.newValue);
-            tasks = loadTasks();
         }
     });
 
