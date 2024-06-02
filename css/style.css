@@ -660,6 +660,18 @@ body {
     background-color: inherit;
 }
 
+@media (max-width: 960px) {
+
+    body {
+        font-size: 62.5%;   
+        display: unset;
+        margin: 3rem auto;
+    }
+    #app {
+        min-width: 600px;
+    
+    }
+}
 @media (max-width: 600px) {
 
     body {
@@ -668,7 +680,7 @@ body {
         margin: 3rem auto;
     }
     #app {
-        max-width: 350px;
+        min-width: 350px;
     
     }
  

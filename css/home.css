@@ -315,9 +315,19 @@ body {
 }
 
 
+@media (min-width: 600px) and (max-width:960px) {
 
+    body {
+        font-size: 62.5%;   
+        margin: 3rem auto;
+    }
+    .container {
+        width: 60%;
+    
+    }
+}
 
-@media(max-width: 700px) {
+@media(max-width: 600px) {
 
     .container {
         width: 80%;
