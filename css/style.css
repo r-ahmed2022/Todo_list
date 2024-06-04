@@ -675,12 +675,12 @@ body {
 @media (max-width: 600px) {
 
     body {
-        font-size: 62.5%;   
+        font-size: 50%;   
         display: unset;
         margin: 3rem auto;
     }
     #app {
-        min-width: 300px;
+        min-width: 270px;
     
     }
  
