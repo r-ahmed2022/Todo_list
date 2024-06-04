@@ -33,7 +33,7 @@ body {
     padding: 20px;
     padding-top: 30px;
     border-radius: 10px;
-    margin: 6rem auto;
+    margin: 7rem auto;
     background-color: transparent;
     display: grid;
     grid-template-columns: repeat(1, minmax(15rem, 25rem));

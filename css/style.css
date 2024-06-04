@@ -37,8 +37,9 @@ body {
 
 .app {
     min-width: 700px;
-    min-height: 100vh;
+    min-height: calc(100vh - 8rem);
     padding: 20px;
+    margin: 6rem auto;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -677,7 +678,6 @@ body {
     }
     #app {
         min-width: 270px;
-        min-height: calc(100vh - 6rem);
     }
  
     .navbar {
